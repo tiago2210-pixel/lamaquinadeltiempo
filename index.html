@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La máquina del tiempo: del siglo XIX al año 802.701</title>
+<style>
+:root{color-scheme:dark;--bg:#070a16;--tx:#e8ecff;--mu:#9aa6d6;--ac:#5ef2d6;--pn:#10162e;--g:#e0a458;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Segoe UI",system-ui,-apple-system,Roboto,sans-serif;min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(1.5px 1.5px at 20px 30px,#fff,transparent),radial-gradient(1px 1px at 90px 80px,#9fb,transparent),radial-gradient(1.5px 1.5px at 150px 20px,#fff,transparent),radial-gradient(1px 1px at 60px 140px,#fff,transparent);background-size:180px 180px;opacity:.55;animation:drift 60s linear infinite}
+body.warp::before{animation-duration:3s}
+@keyframes drift{to{background-position:-720px 0}}
+.glow{position:fixed;inset:0;pointer-events:none;background-color:var(--g);opacity:.2;transition:background-color 1.2s;-webkit-mask:radial-gradient(circle at 50% 0,#000,transparent 65%);mask:radial-gradient(circle at 50% 0,#000,transparent 65%)}
+main{position:relative;max-width:1200px;margin:0 auto;padding:24px 16px 48px}
+header{text-align:center;padding:12px 8px}
+.kicker{letter-spacing:.3em;font-size:.75rem;color:var(--ac);text-transform:uppercase}
+h1{margin:.3em 0;font-size:clamp(1.5rem,4.5vw,2.8rem);line-height:1.15;letter-spacing:.04em;text-shadow:0 0 18px var(--g)}
+.sub{color:var(--mu);max-width:640px;margin:0 auto}
+.hud{display:flex;flex-wrap:wrap;gap:16px;align-items:center;justify-content:center;margin:22px 0 8px}
+.counter{font:700 clamp(1.6rem,5vw,2.6rem)/1 "Courier New",monospace;color:var(--ac);border:1px solid var(--ac);border-radius:12px;padding:10px 18px;min-width:210px;text-align:center;box-shadow:0 0 14px rgba(94,242,214,.35),inset 0 0 14px rgba(94,242,214,.15)}
+.counter.peak{color:#fff;animation:pulse 1.4s infinite}
+@keyframes pulse{50%{box-shadow:0 0 34px #5ef2d6,inset 0 0 20px rgba(94,242,214,.4)}}
+.note{font-size:.72rem;color:var(--mu);text-align:center;margin:0 0 6px}
+.b{font:inherit;font-weight:600;cursor:pointer;color:#06111a;background:linear-gradient(90deg,var(--ac),#8ab4ff);border:0;border-radius:999px;padding:10px 20px;transition:transform .15s,box-shadow .15s}
+.b:hover{transform:translateY(-2px);box-shadow:0 0 16px var(--ac)}
+.b:disabled{opacity:.5;cursor:default}
+.b.alt{background:transparent;color:var(--tx);border:1px solid var(--mu)}
+.bar{height:6px;border-radius:6px;background:#1a2146;margin:14px auto 0;max-width:700px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:linear-gradient(90deg,#e0a458,#b78cf0,#5ef2d6);transition:width .8s}
+.hint{text-align:center;color:var(--mu);font-size:.8rem;margin:10px 0 0}
+.track{overflow-x:auto;scroll-snap-type:x proximity;padding-bottom:12px;scrollbar-color:#3b4a8c transparent}
+.rail{display:flex;gap:26px;position:relative;padding:30px 30px 10px;width:max-content}
+.rail::before{content:"";position:absolute;left:0;right:0;top:39px;height:3px;background:linear-gradient(90deg,#e0a458,#b78cf0 45%,#5ef2d6 62%,#c79bff);box-shadow:0 0 12px #8ab4ff}
+.st{flex:0 0 250px;position:relative;scroll-snap-align:center;padding-top:4px}
+.dot{display:block;width:18px;height:18px;margin:0 0 22px 20px;border-radius:50%;background:var(--c);box-shadow:0 0 12px var(--c);position:relative;transition:transform .4s}
+.st.on .dot{transform:scale(1.6)}
+.card{background:linear-gradient(160deg,var(--pn),#0b0f22);border:1px solid color-mix(in srgb,var(--c) 55%,transparent);border-radius:16px;padding:14px;height:100%;transition:transform .3s,box-shadow .3s;display:flex;flex-direction:column;gap:8px}
+.st.on .card{transform:translateY(-4px);box-shadow:0 0 22px color-mix(in srgb,var(--c) 60%,transparent)}
+.card small{color:var(--c);font-weight:700;letter-spacing:.12em;text-transform:uppercase;font-size:.7rem}
+.card h3{margin:0;font-size:1.02rem}
+.card p{margin:0;color:var(--mu);font-size:.88rem;flex:1}
+.thumb{border-radius:10px;overflow:hidden;border:1px solid #243060;line-height:0}
+svg{width:100%;height:auto}
+.peak .card{border-width:2px;background:linear-gradient(160deg,#0f2a35,#0b0f22);box-shadow:0 0 26px rgba(94,242,214,.45)}
+.peak .dot{animation:pulse2 1.4s infinite;width:26px;height:26px;margin-top:-4px;margin-bottom:18px}
+@keyframes pulse2{50%{box-shadow:0 0 30px 8px var(--c)}}
+.badge{align-self:flex-start;background:var(--ac);color:#04121a;font-weight:800;border-radius:6px;padding:2px 8px;font-size:.72rem}
+.modal{position:fixed;inset:0;background:rgba(3,5,14,.82);display:none;align-items:center;justify-content:center;padding:16px;z-index:20}
+.modal.show{display:flex}
+.box{background:#0d1330;border:1px solid var(--c,#5ef2d6);box-shadow:0 0 30px var(--c,#5ef2d6);border-radius:18px;max-width:560px;width:100%;max-height:92vh;overflow:auto;padding:18px;animation:pop .3s}
+@keyframes pop{from{transform:scale(.92);opacity:0}}
+.box h2{margin:.2em 0}
+.box small{color:var(--c);font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.box p{color:#cfd7ff;line-height:1.5}
+.key{border-left:3px solid var(--c);padding:6px 12px;background:rgba(255,255,255,.04);border-radius:0 8px 8px 0;color:#fff}
+.nav{display:flex;justify-content:space-between;gap:8px;margin-top:14px}
+.quiz{margin-top:34px;background:var(--pn);border:1px solid #2b3a7a;border-radius:18px;padding:20px;max-width:720px;margin-left:auto;margin-right:auto}
+.quiz h2{margin:0 0 6px;color:var(--ac)}
+.opts{display:grid;gap:10px;margin:14px 0}
+.opt{font:inherit;color:var(--tx);background:#151c3f;border:1px solid #2f3d82;border-radius:10px;padding:12px;text-align:left;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--ac)}
+.opt.ok{background:#0f4a3b;border-color:#5ef2d6}
+.opt.no{background:#51202c;border-color:#ff5d73}
+.fb{min-height:1.4em;color:var(--mu)}
+footer{text-align:center;color:var(--mu);font-size:.75rem;margin-top:26px}
+@media (prefers-reduced-motion:reduce){*,*::before{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="glow" id="glow"></div>
+<main>
+<header>
+  <div class="kicker">Basada en la novela de H. G. Wells</div>
+  <h1>LA MÁQUINA DEL TIEMPO:<br>DEL SIGLO XIX AL AÑO 802.701</h1>
+  <p class="sub">Recorre la aventura del Viajero del Tiempo. Pulsa “Ver más” en cada etapa o activa el viaje automático.</p>
+  <div class="hud">
+    <div class="counter" id="ctr">Siglo XIX</div>
+    <button class="b" id="go">⏳ Viajar en el tiempo</button>
+  </div>
+  <p class="note">El contador es una animación ilustrativa del avance en el tiempo.</p>
+  <div class="bar"><i id="fill"></i></div>
+</header>
+<p class="hint">← Desliza la línea del tiempo →</p>
+<section class="track" id="track"><div class="rail" id="rail"></div></section>
+<section class="quiz" id="quiz"></section>
+<footer>Presentación educativa · Línea del tiempo de La máquina del tiempo</footer>
+</main>
+
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mt">
+  <div class="box" id="box"></div>
+</div>
+
+<script>
+const V={
+machine:`<svg viewBox="0 0 200 120"><rect width="200" height="120" fill="#1a1226"/><rect x="38" y="92" width="124" height="8" rx="3" fill="#8a6a3b"/><circle cx="100" cy="58" r="40" fill="none" stroke="#5ef2d6" stroke-width="3"><animate attributeName="opacity" values="1;.35;1" dur="2s" repeatCount="indefinite"/></circle><circle cx="100" cy="58" r="28" fill="none" stroke="#e0a458" stroke-width="3" stroke-dasharray="8 6"><animateTransform attributeName="transform" type="rotate" from="0 100 58" to="360 100 58" dur="6s" repeatCount="indefinite"/></circle><rect x="86" y="52" width="28" height="22" rx="4" fill="#6b4f2a"/><rect x="92" y="38" width="16" height="16" rx="3" fill="#8a6a3b"/><path d="M114 56l22-16" stroke="#e8ecff" stroke-width="3"/><circle cx="137" cy="39" r="4" fill="#ff5d73"/><rect x="62" y="86" width="76" height="6" fill="#c9a24a"/></svg>`,
+city:`<svg viewBox="0 0 200 120"><rect width="200" height="120" fill="#1b1230"/><circle cx="165" cy="24" r="12" fill="#f4e3b0"/><g fill="#2c2142"><rect x="8" y="64" width="30" height="56"/><rect x="42" y="50" width="26" height="70"/><rect x="72" y="22" width="22" height="98"/><polygon points="72,22 83,6 94,22"/><rect x="100" y="60" width="34" height="60"/><rect x="138" y="48" width="26" height="72"/><rect x="168" y="70" width="28" height="50"/></g><circle cx="83" cy="38" r="6" fill="#f4e3b0"/><g fill="#e0a458"><rect x="14" y="72" width="5" height="7"/><rect x="26" y="86" width="5" height="7"/><rect x="48" y="62" width="5" height="7"/><rect x="56" y="80" width="5" height="7"/><rect x="108" y="72" width="5" height="7"/><rect x="120" y="90" width="5" height="7"/><rect x="144" y="60" width="5" height="7"/><rect x="150" y="82" width="5" height="7"/><rect x="174" y="82" width="5" height="7"/></g><rect y="108" width="200" height="12" fill="#120c20"/><line x1="20" y1="108" x2="20" y2="90" stroke="#e0a458" stroke-width="2"/><circle cx="20" cy="88" r="4" fill="#ffd27a"><animate attributeName="opacity" values="1;.5;1" dur="2s" repeatCount="indefinite"/></circle></svg>`,
+demo:`<svg viewBox="0 0 200 120"><rect width="200" height="120" fill="#24170f"/><rect x="20" y="86" width="160" height="8" rx="2" fill="#8a6a3b"/><g fill="#c9a24a"><circle cx="38" cy="54" r="9"/><circle cx="72" cy="52" r="9"/><circle cx="128" cy="52" r="9"/><circle cx="162" cy="54" r="9"/></g><g fill="#4a3720"><rect x="29" y="63" width="18" height="23" rx="5"/><rect x="63" y="61" width="18" height="25" rx="5"/><rect x="119" y="61" width="18" height="25" rx="5"/><rect x="153" y="63" width="18" height="23" rx="5"/></g><rect x="90" y="78" width="20" height="8" fill="#6b4f2a"/><circle cx="100" cy="72" r="6" fill="none" stroke="#5ef2d6" stroke-width="2"><animate attributeName="r" values="4;16;4" dur="1.8s" repeatCount="indefinite"/><animate attributeName="opacity" values="1;0;1" dur="1.8s" repeatCount="indefinite"/></circle><circle cx="100" cy="16" r="5" fill="#ffd27a"/></svg>`,
+travel:`<svg viewBox="0 0 200 120"><rect width="200" height="120" fill="#0b0f26"/><g fill="none" stroke="#b78cf0"><circle cx="100" cy="60" r="50" opacity=".25"/><circle cx="100" cy="60" r="36" opacity=".5"/><circle cx="100" cy="60" r="22"/></g><g stroke="#5ef2d6" stroke-width="2" opacity=".6"><line x1="6" y1="30" x2="60" y2="30"/><line x1="20" y1="60" x2="70" y2="60"/><line x1="140" y1="90" x2="194" y2="90"/><line x1="130" y1="40" x2="186" y2="40"/></g><line x1="100" y1="60" x2="100" y2="22" stroke="#5ef2d6" stroke-width="3"><animateTransform attributeName="transform" type="rotate" from="0 100 60" to="-360 100 60" dur="1.5s" repeatCount="indefinite"/></line><line x1="100" y1="60" x2="124" y2="60" stroke="#e0a458" stroke-width="3"><animateTransform attributeName="transform" type="rotate" from="0 100 60" to="-360 100 60" dur="9s" repeatCount="indefinite"/></line></svg>`,
+future:`<svg viewBox="0 0 200 120"><defs><linearGradient id="gs" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0d2b3a"/><stop offset="1" stop-color="#2a7f6f"/></linearGradient></defs><rect width="200" height="120" fill="url(#gs)"/><circle cx="36" cy="26" r="10" fill="#fff3b0"/><path d="M0 100Q50 72 100 94T200 86V120H0Z" fill="#1f6b4a"/><g fill="#e8f2ee"><rect x="120" y="60" width="44" height="30"/><polygon points="120,60 132,44 152,44 152,60"/><rect x="108" y="86" width="68" height="8"/></g><g fill="#cfe6df"><rect x="30" y="64" width="8" height="34"/><rect x="50" y="76" width="8" height="22"/><rect x="68" y="70" width="8" height="28" transform="rotate(8 72 84)"/></g><g fill="#2fb36b"><circle cx="14" cy="92" r="9"/><circle cx="88" cy="96" r="8"/><circle cx="188" cy="90" r="9"/></g><circle cx="100" cy="30" r="2" fill="#fff"><animate attributeName="opacity" values="1;.2;1" dur="2s" repeatCount="indefinite"/></circle></svg>`,
+eloi:`<svg viewBox="0 0 200 120"><rect width="200" height="120" fill="#163f3a"/><circle cx="170" cy="22" r="10" fill="#fff3b0"/><g><circle cx="70" cy="40" r="9" fill="#ffe0cc"/><path d="M60 38q10-14 20 0v-4q-10-12-20 0z" fill="#f2c94c"/><polygon points="70,50 56,92 84,92" fill="#f8b6d8"/><rect x="66" y="92" width="3" height="12" fill="#ffe0cc"/><rect x="73" y="92" width="3" height="12" fill="#ffe0cc"/></g><g><circle cx="118" cy="48" r="8" fill="#ffe0cc"/><path d="M110 46q8-13 16 0v-3q-8-11-16 0z" fill="#f2c94c"/><polygon points="118,57 106,94 130,94" fill="#b6e3f8"/><rect x="114" y="94" width="3" height="10" fill="#ffe0cc"/><rect x="121" y="94" width="3" height="10" fill="#ffe0cc"/></g><rect y="104" width="200" height="16" fill="#1f6b4a"/><g fill="#ff9ccf"><circle cx="20" cy="108" r="4"/><circle cx="96" cy="110" r="4"/><circle cx="150" cy="108" r="4"/><circle cx="186" cy="112" r="4"/></g></svg>`,
+morlock:`<svg viewBox="0 0 200 120"><rect width="200" height="120" fill="#0a0610"/><polygon points="88,0 112,0 124,40 76,40" fill="#f4e3b0" opacity=".18"/><g fill="#1b1226"><rect y="104" width="200" height="16"/><rect x="10" y="30" width="30" height="74"/><rect x="160" y="40" width="30" height="64"/></g><g><ellipse cx="100" cy="86" rx="20" ry="22" fill="#d9d3e8"/><circle cx="100" cy="56" r="15" fill="#e6e0f2"/><circle cx="94" cy="54" r="4" fill="#ff5d73"><animate attributeName="opacity" values="1;.3;1" dur="1.6s" repeatCount="indefinite"/></circle><circle cx="107" cy="54" r="4" fill="#ff5d73"><animate attributeName="opacity" values="1;.3;1" dur="1.6s" repeatCount="indefinite"/></circle><rect x="76" y="76" width="8" height="26" rx="4" fill="#d9d3e8"/><rect x="116" y="76" width="8" height="26" rx="4" fill="#d9d3e8"/></g><g fill="#ff5d73"><circle cx="30" cy="70" r="2.5"/><circle cx="38" cy="70" r="2.5"/><circle cx="170" cy="80" r="2.5"/><circle cx="178" cy="80" r="2.5"/></g><circle cx="150" cy="30" r="9" fill="none" stroke="#8a6a8f" stroke-width="3" stroke-dasharray="4 3"><animateTransform attributeName="transform" type="rotate" from="0 150 30" to="360 150 30" dur="5s" repeatCount="indefinite"/></circle></svg>`,
+human:`<svg viewBox="0 0 200 120"><rect width="200" height="120" fill="#150f2e"/><rect x="0" y="0" width="98" height="120" fill="#2b2144"/><rect x="102" y="0" width="98" height="120" fill="#0a0610"/><g><rect x="34" y="14" width="30" height="5" fill="#e0a458"/><rect x="40" y="2" width="18" height="12" fill="#e0a458"/><circle cx="49" cy="32" r="9" fill="#ffe0cc"/><polygon points="49,42 36,84 62,84" fill="#f8b6d8"/></g><g><circle cx="150" cy="36" r="10" fill="#e6e0f2"/><circle cx="146" cy="34" r="2.5" fill="#ff5d73"/><circle cx="154" cy="34" r="2.5" fill="#ff5d73"/><rect x="138" y="48" width="24" height="34" rx="6" fill="#d9d3e8"/><circle cx="178" cy="90" r="9" fill="none" stroke="#8a6a8f" stroke-width="3" stroke-dasharray="4 3"><animateTransform attributeName="transform" type="rotate" from="0 178 90" to="360 178 90" dur="4s" repeatCount="indefinite"/></circle></g><path d="M70 100h60" stroke="#5ef2d6" stroke-width="3"/><polygon points="130,94 142,100 130,106" fill="#5ef2d6"/><text x="49" y="112" fill="#fff" font-size="9" text-anchor="middle" font-family="sans-serif">Eloi</text><text x="150" y="112" fill="#fff" font-size="9" text-anchor="middle" font-family="sans-serif">Morlocks</text></svg>`
+};
+const E=[
+{y:'Siglo XIX',t:'La época victoriana',c:'#e0a458',v:'city',x:'city',
+s:'El Viajero del Tiempo vive en la Inglaterra de su época y desarrolla una máquina capaz de viajar a través del tiempo.',
+d:['En la Inglaterra victoriana, un científico e inventor reúne a sus amigos para conversar sobre ideas atrevidas.','Sostiene que el tiempo puede entenderse como una cuarta dimensión, y que, con la máquina adecuada, se podría viajar por ella.'],
+k:'En la novela, el protagonista se presenta como “el Viajero del Tiempo”, sin dar su nombre.'},
+{y:'Siglo XIX',t:'La presentación del invento',c:'#d98b5f',v:'demo',x:'demo',
+s:'El protagonista demuestra a sus invitados que es posible viajar en el tiempo.',
+d:['Ante sus invitados, el Viajero muestra un pequeño modelo de su máquina.','Al accionar la palanca, el modelo desaparece ante los ojos de todos: según él, ha viajado por el tiempo.'],
+k:'Muchos invitados dudan; para convencerlos, el Viajero promete contarles su verdadera experiencia.'},
+{y:'El viaje',t:'El viaje hacia el futuro',c:'#b78cf0',v:'travel',x:'travel',
+s:'El Viajero usa su máquina y avanza miles de años hacia una época desconocida.',
+d:['Sentado en su máquina, empuja la palanca y el mundo empieza a cambiar a toda velocidad.','Los días y las noches se suceden como parpadeos, y a su alrededor desaparecen los edificios que conocía.'],
+k:'Cuando por fin se detiene, es lanzado de la máquina en medio de una tormenta de granizo.'},
+{y:'Año 802.701',t:'Llegada al futuro',c:'#5ef2d6',v:'future',x:'future',
+s:'Descubre un mundo muy diferente al suyo, con naturaleza exuberante y restos de la antigua civilización humana.',
+d:['El Viajero llega al año 802.701 y se encuentra con jardines, flores y vegetación por todas partes.','Entre la naturaleza se alzan grandes edificios en ruinas y una enorme estatua blanca: la Esfinge Blanca.'],
+k:'Punto culminante del viaje: aquí comienza el gran misterio de la humanidad del futuro.'},
+{y:'Año 802.701',t:'El encuentro con los Eloi',c:'#7fe38a',v:'eloi',x:'eloi',
+s:'Conoce a seres pequeños, de apariencia delicada, que viven en la superficie.',
+d:['Los Eloi son pequeños, de aspecto frágil y gentil, y visten túnicas sencillas.','Viven en la superficie, se alimentan de fruta y parecen despreocupados; sin embargo, temen la oscuridad de la noche.'],
+k:'Entre ellos conoce a Weena, una Eloi que se hace amiga del Viajero.'},
+{y:'Año 802.701',t:'El descubrimiento de los Morlocks',c:'#ff5d73',v:'morlock',x:'morlock',
+s:'Descubre criaturas que habitan bajo tierra y comprende que el futuro es mucho más peligroso de lo que parecía.',
+d:['Los Morlocks son criaturas pálidas que viven bajo tierra y huyen de la luz intensa.','Salen de noche y el Viajero comprende que los Eloi les temen. Además, su máquina del tiempo ha desaparecido y debe recuperarla.'],
+k:'El mundo amable de la superficie esconde un peligro bajo el suelo.'},
+{y:'Año 802.701',t:'El misterio de la humanidad',c:'#c79bff',v:'human',x:'human',
+s:'Descubre cómo las diferencias sociales del pasado pueden relacionarse con la evolución de Eloi y Morlocks.',
+d:['El Viajero propone una teoría: la distancia entre las clases sociales de su época habría crecido hasta formar dos grupos muy distintos.','Los Eloi vendrían de quienes vivían con comodidad y los Morlocks, de quienes trabajaban en condiciones duras.'],
+k:'La novela usa el futuro para hacernos pensar sobre las desigualdades de la sociedad de Wells.'}
+];
+const $=s=>document.querySelector(s);
+const rail=$('#rail'),track=$('#track'),ctr=$('#ctr'),modal=$('#modal'),box=$('#box');
+rail.innerHTML=E.map((e,i)=>`<article class="st${i==3?' peak':''}" data-i="${i}" style="--c:${e.c}"><span class="dot"></span><div class="card"><small>${e.y}</small>${i==3?'<span class="badge">★ PUNTO CULMINANTE</span>':''}<h3>${i+1}. ${e.t}</h3><div class="thumb">${V[e.v]}</div><p>${e.s}</p><button class="b" data-o="${i}">Ver más</button></div></article>`).join('');
+const sts=[...rail.children];
+let cur=0,run=false;
+function activate(i){cur=i;sts.forEach((s,j)=>s.classList.toggle('on',j==i));$('#glow').style.setProperty('--g',E[i].c);$('#fill').style.width=((i+1)/E.length*100)+'%'}
+function center(i){sts[i].scrollIntoView({behavior:'smooth',inline:'center',block:'nearest'})}
+function openM(i){
+  activate(i);const e=E[i];
+  box.style.setProperty('--c',e.c);
+  box.innerHTML=`<small>${e.y} · Etapa ${i+1} de 7</small><h2 id="mt">${e.t}</h2><div class="thumb">${V[e.x]}</div>${e.d.map(p=>`<p>${p}</p>`).join('')}<p class="key">💡 ${e.k}</p><div class="nav"><button class="b alt" id="pv" ${i==0?'disabled':''}>← Anterior</button><button class="b alt" id="cl">Cerrar</button><button class="b" id="nx" ${i==E.length-1?'disabled':''}>Siguiente →</button></div>`;
+  modal.classList.add('show');$('#cl').focus();
+  $('#cl').onclick=closeM;$('#pv').onclick=()=>{openM(i-1);center(i-1)};$('#nx').onclick=()=>{openM(i+1);center(i+1)};
+}
+function closeM(){modal.classList.remove('show')}
+modal.onclick=e=>{if(e.target===modal)closeM()};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeM()});
+rail.onclick=e=>{const b=e.target.closest('[data-o]');if(b)openM(+b.dataset.o)};
+const fmt=n=>String(Math.round(n)).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+$('#go').onclick=function(){
+  if(run)return;run=true;this.disabled=true;ctr.classList.remove('peak');
+  document.body.classList.add('warp');
+  const step=1300,D=step*E.length,t0=performance.now();
+  E.forEach((_,i)=>setTimeout(()=>{activate(i);center(i)},i*step));
+  (function f(t){
+    const p=Math.min(1,(t-t0)/D);
+    ctr.textContent=p<.12?'Siglo XIX':fmt(1800*Math.pow(802701/1800,p));
+    if(p<1)requestAnimationFrame(f);else{
+      ctr.textContent='802.701';ctr.classList.add('peak');
+      document.body.classList.remove('warp');run=false;$('#go').disabled=false;$('#go').textContent='↺ Viajar otra vez';
+    }
+  })(t0);
+};
+const Q=[
+{q:'¿Cómo explica el Viajero del Tiempo el tiempo?',o:['Como una cuarta dimensión','Como un río de agua','Como un tipo de energía','Como un reloj gigante'],a:0},
+{q:'¿Qué hace desaparecer ante sus invitados?',o:['Una silla','Un pequeño modelo de su máquina','Una lámpara','Un reloj de bolsillo'],a:1},
+{q:'¿A qué año llega el Viajero?',o:['802.701','2.026','3.000','30.000'],a:0},
+{q:'¿Dónde viven los Eloi?',o:['Bajo tierra','En el mar','En la superficie','En una cueva'],a:2},
+{q:'¿Quiénes habitan bajo tierra y temen a la luz intensa?',o:['Los Eloi','Los Morlocks','Los invitados','Los victorianos'],a:1},
+{q:'¿Qué teoría propone el Viajero sobre Eloi y Morlocks?',o:['Vienen de otro planeta','Son animales sin relación con humanos','Son resultado de la evolución de las diferencias sociales','Son máquinas'],a:2}
+];
+let qi=0,sc=0;
+function showQ(){
+  const z=$('#quiz');
+  if(qi>=Q.length){
+    const m=sc==Q.length?'¡Perfecto! Eres un auténtico viajero del tiempo.':sc>=4?'¡Muy bien! Casi dominas la historia.':'Repasa la línea del tiempo y vuelve a intentarlo.';
+    z.innerHTML=`<h2>Resultado</h2><p style="font-size:1.5rem;margin:.3em 0">${sc} / ${Q.length}</p><p class="fb">${m}</p><button class="b" id="rs">Repetir cuestionario</button>`;
+    $('#rs').onclick=()=>{qi=0;sc=0;showQ()};return;
+  }
+  const q=Q[qi];
+  z.innerHTML=`<h2>Cuestionario final</h2><small style="color:var(--mu)">Pregunta ${qi+1} de ${Q.length}</small><p style="font-size:1.1rem">${q.q}</p><div class="opts">${q.o.map((t,j)=>`<button class="opt" data-j="${j}">${t}</button>`).join('')}</div><p class="fb" id="fb"></p><button class="b" id="nq" style="display:none">${qi==Q.length-1?'Ver resultado':'Siguiente'}</button>`;
+  z.querySelectorAll('.opt').forEach(b=>b.onclick=()=>{
+    const j=+b.dataset.j,ok=j==q.a;if(ok)sc++;
+    z.querySelectorAll('.opt').forEach((o,k)=>{o.disabled=true;if(k==q.a)o.classList.add('ok')});
+    if(!ok)b.classList.add('no');
+    $('#fb').textContent=ok?'¡Correcto!':'Respuesta incorrecta. La correcta está marcada en verde.';
+    $('#nq').style.display='inline-block';
+  });
+  $('#nq') && ($('#nq').onclick=()=>{qi++;showQ()});
+}
+showQ();activate(0);
+</script>
+</body>
+</html>
